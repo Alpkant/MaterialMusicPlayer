@@ -232,27 +232,32 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
 
     }
 
+    public void seekToMusic(int seek){
 
-    private void playMusic() {
+            mediaPlayer.seekTo(seek);
+
+    }
+
+    public void playMusic() {
         if (!mediaPlayer.isPlaying())
             mediaPlayer.start();
     }
 
-    private void stopMusic() {
+    public void stopMusic() {
         if (mediaPlayer == null)
             return;
         if (mediaPlayer.isPlaying())
             mediaPlayer.stop();
     }
 
-    private void pauseMusic() {
+    public void pauseMusic() {
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
             resumePosition = mediaPlayer.getCurrentPosition();
         }
     }
 
-    private void resumeMusic() {
+    public void resumeMusic() {
         if (!mediaPlayer.isPlaying()) {
             mediaPlayer.seekTo(resumePosition);
             mediaPlayer.start();
@@ -325,7 +330,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         });
     }
 
-    private void updateMetaData() {
+    public void updateMetaData() {
 
         final TypedArray imgs = getResources().obtainTypedArray(R.array.images);
         final Random rand = new Random();
@@ -343,7 +348,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
                 .build());
     }
 
-    private void initializeMediaPlayer() {
+    public void initializeMediaPlayer() {
         mediaPlayer = new MediaPlayer();
 
         mediaPlayer.setOnCompletionListener(this);
@@ -365,7 +370,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         mediaPlayer.prepareAsync();
     }
 
-    private void skipToNext() {
+    public void skipToNext() {
 
         if (audioIndex == audioList.size() - 1) {
             //if last in playlist
@@ -391,7 +396,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         else return 0;
     }
 
-    private void skipToPrevious() {
+    public void skipToPrevious() {
 
         if (audioIndex == 0) {
             //if first in playlist

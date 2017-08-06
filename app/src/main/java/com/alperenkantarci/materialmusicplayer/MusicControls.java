@@ -15,12 +15,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import static android.R.attr.duration;
+
 
 /**
  * Created by Alperen Kantarci on 4.08.2017.
  */
 
-// TODO(2) ADJUST SEEKBAR AND IMPLEMENT TO SONG
 // TODO(3) ADD BUTTON IMAGES (SHUFFLE VE RANDOMU SONA BIRAK)AND IMPLEMENT THEIR METHODS
 // TODO(4) SONG LISTE DÖNÜŞÜ EKLE
 // TODO(5) ALBUM ARTLARI ALMANIN YOLUNU BUL
@@ -35,17 +36,23 @@ public class MusicControls extends AppCompatActivity{
     int audioIndex;
     MediaPlayerService mediaPlayer;
     SeekBar seekBar;
+    TextView titleTextView;
+    TextView albumTextView;
+    TextView artistTextView;
+    TextView currentSecondTextView;
+    TextView maxSecondTextView;
+    int duration;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.playing_song);
 
-        TextView titleTextView = (TextView) findViewById(R.id.titleTextView);
-        TextView albumTextView = (TextView) findViewById(R.id.albumTextView);
-        TextView artistTextView = (TextView) findViewById(R.id.artistTextView);
-        final TextView currentSecondTextView = (TextView) findViewById(R.id.currentSecond);
-        TextView maxSecondTextView = (TextView) findViewById(R.id.maxSecond);
+        titleTextView = (TextView) findViewById(R.id.titleTextView);
+        albumTextView = (TextView) findViewById(R.id.albumTextView);
+        artistTextView = (TextView) findViewById(R.id.artistTextView);
+        currentSecondTextView = (TextView) findViewById(R.id.currentSecond);
+        maxSecondTextView = (TextView) findViewById(R.id.maxSecond);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
 
 
@@ -60,7 +67,7 @@ public class MusicControls extends AppCompatActivity{
             titleTextView.setText(audioList.get(audioIndex).getTitle());
             artistTextView.setText(audioList.get(audioIndex).getArtist());
             albumTextView.setText(audioList.get(audioIndex).getAlbum());
-            final int duration = audioList.get(audioIndex).getDuration();
+            duration  = audioList.get(audioIndex).getDuration();
             maxSecondTextView.setText(millisecToTime(duration));
             seekBar.setMax(duration);
             final Handler mHandler = new Handler();
@@ -83,6 +90,8 @@ public class MusicControls extends AppCompatActivity{
 
                     if(mCurrentPosition >= duration){
                         mHandler.removeCallbacks(this);
+                        mediaPlayer.skipToNext();
+                        updateMetaData();
                     }else{
                         mHandler.postDelayed(this, 1000);
                     }
@@ -93,6 +102,11 @@ public class MusicControls extends AppCompatActivity{
             seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean userChanged) {
+                    if (userChanged==true){
+                        mediaPlayer.seekToMusic(progress);
+                        seekBar.setProgress(progress);
+                        currentSecondTextView.setText(millisecToTime(progress));
+                    }
 
                 }
 
@@ -189,6 +203,13 @@ public class MusicControls extends AppCompatActivity{
         }
     }
 
+    private void updateMetaData(){
+
+        titleTextView.setText(audioList.get(audioIndex).getTitle());
+        artistTextView.setText(audioList.get(audioIndex).getArtist());
+        albumTextView.setText(audioList.get(audioIndex).getAlbum());
+        duration = audioList.get(audioIndex).getDuration();
+    }
 
 
 }
