@@ -385,6 +385,12 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
        initializeMediaPlayer();
     }
 
+    public int getCurrentTime(){
+        if (mediaPlayer!=null)
+        return mediaPlayer.getCurrentPosition();
+        else return 0;
+    }
+
     private void skipToPrevious() {
 
         if (audioIndex == 0) {

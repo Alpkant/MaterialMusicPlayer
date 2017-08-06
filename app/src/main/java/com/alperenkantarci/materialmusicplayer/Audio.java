@@ -23,13 +23,6 @@ public class Audio implements Serializable{
         this.duration = duration;
     }
 
-    public Audio(String data, String title, String album, String artist) {
-        this.data = data;
-        this.title = title;
-        this.album = album;
-        this.artist = artist;
-        this.duration = -1;
-    }
 
 
     public int getDuration() {
