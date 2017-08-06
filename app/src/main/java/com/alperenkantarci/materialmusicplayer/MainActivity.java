@@ -75,41 +75,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putBoolean("ServiceState", serviceBound);
-        super.onSaveInstanceState(outState);
-    }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        serviceBound = savedInstanceState.getBoolean("ServiceState");
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (serviceBound) {
-            unbindService(serviceConnection);
-            player.stopSelf();
-        }
-    }
-
-    private ServiceConnection serviceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            MediaPlayerService.LocalBinder binder = (MediaPlayerService.LocalBinder) iBinder;
-            player = binder.getService();
-            serviceBound = true;
-            Log.i("Service Bound", "SERVICE BOUNDED");
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            serviceBound = false;
-        }
-    };
 
     private void playAudio(int audioIndex) {
         if (!serviceBound) {
@@ -117,10 +84,10 @@ public class MainActivity extends AppCompatActivity {
             StorageUtil storage = new StorageUtil(getApplicationContext());
             storage.storeAudio(audioList);
             storage.storeAudioIndex(audioIndex);
-
+            /*
             Intent playerIntent = new Intent(this, MediaPlayerService.class);
             startService(playerIntent);
-            bindService(playerIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+            bindService(playerIntent, serviceConnection, Context.BIND_AUTO_CREATE);*/
         } else {
             //Store the new audioIndex to SharedPreferences
             StorageUtil storage = new StorageUtil(getApplicationContext());
@@ -128,8 +95,9 @@ public class MainActivity extends AppCompatActivity {
 
             //Service is active
             //Send a broadcast to the service -> PLAY_NEW_AUDIO
+            /*
             Intent broadcastIntent = new Intent(Broadcast_PLAY_NEW_AUDIO);
-            sendBroadcast(broadcastIntent);
+            sendBroadcast(broadcastIntent); */
         }
     }
 
