@@ -232,6 +232,52 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
 
     }
 
+    public int skipToNex() {
+
+        if (audioIndex == audioList.size() - 1) {
+            //if last in playlist
+            audioIndex = 0;
+            activeAudio = audioList.get(audioIndex);
+        } else {
+            //get next in playlist
+            activeAudio = audioList.get(++audioIndex);
+        }
+
+        //Update stored index
+        new StorageUtil(getApplicationContext()).storeAudioIndex(audioIndex);
+
+        stopMusic();
+        //reset mediaPlayer
+        mediaPlayer.reset();
+        initializeMediaPlayer();
+        return audioIndex;
+    }
+
+
+
+    public int skipToPrev() {
+
+        if (audioIndex == 0) {
+            //if first in playlist
+            //set index to the last of audioList
+            audioIndex = audioList.size() - 1;
+            activeAudio = audioList.get(audioIndex);
+        } else {
+            //get previous in playlist
+            activeAudio = audioList.get(--audioIndex);
+        }
+
+        //Update stored index
+        new StorageUtil(getApplicationContext()).storeAudioIndex(audioIndex);
+
+        stopMusic();
+        //reset mediaPlayer
+        mediaPlayer.reset();
+        initializeMediaPlayer();
+        return audioIndex;
+    }
+
+
     public boolean isPlaying(){
         return mediaPlayer.isPlaying();
     }

@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MusicControls">
+        <activity android:name=".MusicControls"
+            android:parentActivityName=".MainActivity">
 
         </activity>
         <service android:name=".MediaPlayerService"/>

@@ -4,16 +4,18 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
@@ -21,16 +23,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import static android.R.attr.onClick;
-
 
 /**
  * Created by Alperen Kantarci on 4.08.2017.
  */
 
-// TODO(3) (SHUFFLE VE RANDOMU SONA BIRAK)AND IMPLEMENT THEIR METHODS
-// TODO(4) SONG LISTE DÖNÜŞÜ EKLE
-// TODO(5) ALBUM ARTLARI ALMANIN YOLUNU BUL
+// TODO(1) MAIN LISTE DÖNÜŞTE RUNNABLE KAPAT
+// TODO(2) SONG LISTE DÖNÜŞÜ EKLE
+// TODO(3) ALBUM ARTLARI ALMANIN YOLUNU BUL
 
 public class MusicControls extends AppCompatActivity{
 
@@ -50,6 +50,19 @@ public class MusicControls extends AppCompatActivity{
     ImageButton previousSong,nextSong,stopPlay;
     boolean startStop=true;
     int duration;
+    final Handler mHandler = new Handler();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.play_list,menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,7 +95,7 @@ public class MusicControls extends AppCompatActivity{
             duration  = audioList.get(audioIndex).getDuration();
             maxSecondTextView.setText(millisecToTime(duration));
             seekBar.setMax(duration);
-            final Handler mHandler = new Handler();
+
 
             this.runOnUiThread(new Runnable() {
 
@@ -139,6 +152,7 @@ public class MusicControls extends AppCompatActivity{
 
 
 
+
         }catch (NullPointerException e){
             Log.e("index error","index error");
         }
@@ -149,11 +163,17 @@ public class MusicControls extends AppCompatActivity{
             public void onClick(View view) {
                 switch (view.getId()){
                     case R.id.previousSong:
-                        Log.i("Prev Song","Prev Song");
+                        audioIndex= mediaPlayer.skipToPrev();
+                        updateMetaData();
+                        stopPlay.setBackground(getDrawable(R.drawable.ic_pause_circle_outline_black_48dp));
+                        startStop=true;
                         break;
 
                     case R.id.nextSong:
-                        Log.i("Next Song","Next Song");
+                        audioIndex = mediaPlayer.skipToNex();
+                        updateMetaData();
+                        stopPlay.setBackground(getDrawable(R.drawable.ic_pause_circle_outline_black_48dp));
+                        startStop=true;
                         break;
 
                     case R.id.stopPlay:
@@ -176,8 +196,6 @@ public class MusicControls extends AppCompatActivity{
         nextSong.setOnClickListener(controlListener);
         previousSong.setOnClickListener(controlListener);
         stopPlay.setOnClickListener(controlListener);
-
-
 
 
         Log.e("CONTROL PAGE","CONTROLPAGE");
@@ -219,7 +237,7 @@ public class MusicControls extends AppCompatActivity{
         if (serviceBound) {
             unbindService(serviceConnection);
             mediaPlayer.stopSelf();
-        }
+            }
     }
 
 
@@ -254,11 +272,12 @@ public class MusicControls extends AppCompatActivity{
     }
 
     private void updateMetaData(){
-
         titleTextView.setText(audioList.get(audioIndex).getTitle());
         artistTextView.setText(audioList.get(audioIndex).getArtist());
         albumTextView.setText(audioList.get(audioIndex).getAlbum());
         duration = audioList.get(audioIndex).getDuration();
+        seekBar.setMax(duration);
+        maxSecondTextView.setText(millisecToTime(duration));
     }
 
 
