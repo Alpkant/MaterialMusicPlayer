@@ -4,25 +4,31 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import static android.R.attr.duration;
+import static android.R.attr.onClick;
 
 
 /**
  * Created by Alperen Kantarci on 4.08.2017.
  */
 
-// TODO(3) ADD BUTTON IMAGES (SHUFFLE VE RANDOMU SONA BIRAK)AND IMPLEMENT THEIR METHODS
+// TODO(3) (SHUFFLE VE RANDOMU SONA BIRAK)AND IMPLEMENT THEIR METHODS
 // TODO(4) SONG LISTE DÖNÜŞÜ EKLE
 // TODO(5) ALBUM ARTLARI ALMANIN YOLUNU BUL
 
@@ -41,6 +47,8 @@ public class MusicControls extends AppCompatActivity{
     TextView artistTextView;
     TextView currentSecondTextView;
     TextView maxSecondTextView;
+    ImageButton previousSong,nextSong,stopPlay;
+    boolean startStop=true;
     int duration;
 
     @Override
@@ -54,6 +62,10 @@ public class MusicControls extends AppCompatActivity{
         currentSecondTextView = (TextView) findViewById(R.id.currentSecond);
         maxSecondTextView = (TextView) findViewById(R.id.maxSecond);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
+        previousSong = (ImageButton) findViewById(R.id.previousSong);
+        nextSong = (ImageButton) findViewById(R.id.nextSong);
+        stopPlay = (ImageButton) findViewById(R.id.stopPlay);
+
 
 
         Intent comingIntent = getIntent();
@@ -102,12 +114,16 @@ public class MusicControls extends AppCompatActivity{
             seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean userChanged) {
-                    if (userChanged==true){
+                    if (userChanged && mediaPlayer.isPlaying()){
                         mediaPlayer.seekToMusic(progress);
                         seekBar.setProgress(progress);
                         currentSecondTextView.setText(millisecToTime(progress));
+                    }else if(userChanged){
+                        mediaPlayer.resumeMusic();
+                        mediaPlayer.seekToMusic(progress);
+                        currentSecondTextView.setText(millisecToTime(progress));
+                        mediaPlayer.pauseMusic();
                     }
-
                 }
 
                 @Override
@@ -126,6 +142,40 @@ public class MusicControls extends AppCompatActivity{
         }catch (NullPointerException e){
             Log.e("index error","index error");
         }
+
+        View.OnClickListener controlListener = new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()){
+                    case R.id.previousSong:
+                        Log.i("Prev Song","Prev Song");
+                        break;
+
+                    case R.id.nextSong:
+                        Log.i("Next Song","Next Song");
+                        break;
+
+                    case R.id.stopPlay:
+                        if(!startStop){
+                            stopPlay.animate().rotationY(0).start();
+                            stopPlay.setBackground(getDrawable(R.drawable.ic_pause_circle_outline_black_48dp));
+                            startStop=true;
+                            mediaPlayer.resumeMusic();
+                        }else{
+                            stopPlay.animate().rotationY(360).start();
+                            stopPlay.setBackground(getDrawable(R.drawable.ic_play_circle_outline_black_48dp));
+                            startStop=false;
+                            mediaPlayer.pauseMusic();
+                        }
+                        break;
+                }
+            }
+        };
+
+        nextSong.setOnClickListener(controlListener);
+        previousSong.setOnClickListener(controlListener);
+        stopPlay.setOnClickListener(controlListener);
 
 
 

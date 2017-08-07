@@ -232,11 +232,14 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
 
     }
 
-    public void seekToMusic(int seek){
-
-            mediaPlayer.seekTo(seek);
-
+    public boolean isPlaying(){
+        return mediaPlayer.isPlaying();
     }
+
+    public void seekToMusic(int seek){
+            mediaPlayer.seekTo(seek);
+    }
+
 
     public void playMusic() {
         if (!mediaPlayer.isPlaying())
