@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
  */
 
 // TODO(1) MAIN LISTE DÖNÜŞTE RUNNABLE KAPAT
-// TODO(2) SONG LISTE DÖNÜŞÜ EKLE
+// TODO(2) SETTINGSE THEME EKLE
 // TODO(3) ALBUM ARTLARI ALMANIN YOLUNU BUL
 
 public class MusicControls extends AppCompatActivity{
@@ -49,6 +50,7 @@ public class MusicControls extends AppCompatActivity{
     TextView maxSecondTextView;
     ImageButton previousSong,nextSong,stopPlay;
     boolean startStop=true;
+    Runnable myRunnable;
     int duration;
     final Handler mHandler = new Handler();
     @Override
@@ -61,14 +63,27 @@ public class MusicControls extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                mHandler.removeCallbacks(myRunnable);
+                return true;
+
+            case R.id.action_list:
+                mHandler.removeCallbacks(myRunnable);
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.playing_song);
-
+        Log.e("onCreate","onCreate");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         titleTextView = (TextView) findViewById(R.id.titleTextView);
         albumTextView = (TextView) findViewById(R.id.albumTextView);
         artistTextView = (TextView) findViewById(R.id.artistTextView);
@@ -85,6 +100,9 @@ public class MusicControls extends AppCompatActivity{
         Bundle comingBundle = comingIntent.getExtras();
         StorageUtil storage = new StorageUtil(getApplicationContext());
         audioList = storage.loadAudio();
+        if(serviceBound)
+            mediaPlayer.stopMusic();
+
         playAudio(audioIndex);
 
         try {
@@ -96,8 +114,7 @@ public class MusicControls extends AppCompatActivity{
             maxSecondTextView.setText(millisecToTime(duration));
             seekBar.setMax(duration);
 
-
-            this.runOnUiThread(new Runnable() {
+            myRunnable = new Runnable() {
 
                 @Override
                 public void run() {
@@ -110,11 +127,11 @@ public class MusicControls extends AppCompatActivity{
                         seekBar.setProgress(mCurrentPosition);
 
                     }else{
-                        Log.e("COULDNT'","COULDNT");
+                        Log.e("MediaPlayer null","MediaPlayer null");
                     }
 
                     if(mCurrentPosition >= duration){
-                        mHandler.removeCallbacks(this);
+                        //mHandler.removeCallbacks(this);
                         mediaPlayer.skipToNext();
                         updateMetaData();
                     }else{
@@ -122,7 +139,9 @@ public class MusicControls extends AppCompatActivity{
                     }
 
                 }
-            });
+            };
+
+            this.runOnUiThread(myRunnable);
 
             seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
@@ -226,18 +245,31 @@ public class MusicControls extends AppCompatActivity{
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mHandler.removeCallbacks(myRunnable);
+    }
+
+    @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         serviceBound = savedInstanceState.getBoolean("ServiceState");
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("onResume","onResume");
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (serviceBound) {
+        Log.e("onDestroy","onDestroy");
+       /* if (serviceBound) {
             unbindService(serviceConnection);
             mediaPlayer.stopSelf();
-            }
+            }*/
     }
 
 

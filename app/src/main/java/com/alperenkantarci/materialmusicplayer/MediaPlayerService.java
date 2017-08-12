@@ -66,6 +66,8 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
     //AudioPlayer notification ID
     private static final int NOTIFICATION_ID = 101;
 
+
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -82,14 +84,11 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         register_playNewAudio();
     }
 
-
-
     public class LocalBinder extends Binder {
         public MediaPlayerService getService() {
             return MediaPlayerService.this;
         }
     }
-
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -276,6 +275,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         initializeMediaPlayer();
         return audioIndex;
     }
+
 
 
     public boolean isPlaying(){
@@ -508,6 +508,8 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         registerReceiver(playNewAudio, filter);
     }
 
+
+
     //Handle incoming phone calls
     private void callStateListener() {
         // Get the telephony manager
@@ -584,8 +586,8 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
                 .setSmallIcon(android.R.drawable.stat_sys_headset)
                 // Set Notification content information
                 .setContentText(activeAudio.getArtist())
-                .setContentTitle(activeAudio.getAlbum())
-                .setContentInfo(activeAudio.getTitle())
+                .setContentTitle(activeAudio.getTitle())
+                .setContentInfo(activeAudio.getAlbum())
                 // Add playback actions
                 .addAction(android.R.drawable.ic_media_previous, "previous", playbackAction(3))
                 .addAction(notificationAction, "pause", play_pauseAction)
