@@ -1,12 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#4CAF50</color>
-    <color name="colorPrimaryDark">#388E3C</color>
-    <color name="primary_light">#C8E6C9</color>
-    <color name="colorAccent">#FF5252</color>
-    <color name="primary_text">#212121</color>
-    <color name="secondary_text">#727272</color>
-    <color name="icons">#ffffff</color>
-    <color name="divider">#b6b6b6</color>
-    <color name="cardview_dark_background">#4CAF50</color>
+    <!--Light Theme-->
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#000</color>
+    <color name="textColorPrimary">#000</color>
+    <color name="colorPrimaryFontDark">#264348</color>
+
+    <color name="colorPrimaryInverse">#161619</color>
+    <color name="colorPrimaryDarkInverse">#111111</color>
+    <color name="textColorPrimaryInverse">#FFFFFF</color>
+    <color name="colorPrimaryFontDarkInverse">#FAFAFA</color>
+
+    <color name="colorPrimary2">#6e3c1b</color>
+    <color name="colorPrimaryDark2">#5e2c0b</color>
+    <color name="textColorPrimary2">#FFFFFF</color>
+    <color name="colorPrimaryFontDark2">#FAFAFA</color>
+
+    <color name="colorPrimary3">#493b44</color>
+    <color name="colorPrimaryDark3">#43353D</color>
+    <color name="textColorPrimary3">#FFFFFF</color>
+    <color name="colorPrimaryFontDark3">#FAFAFA</color>
+
+    <color name="colorPrimary4">#fffdf2</color>
+    <color name="colorPrimaryDark4">#2c3e50</color>
+    <color name="textColorPrimary4">#2c3e50</color>
+    <color name="colorPrimaryFontDark4">#2c3e50</color>
+    <color name="colorMainBackground4">#f2eedc</color>
+
+    <color name="colorPrimary5">#34495e</color>
+    <color name="colorPrimaryDark5">#2c3e50</color>
+    <color name="textColorPrimary5">#FFFFFF</color>
+    <color name="colorPrimaryFontDark5">#FAFAFA</color>
+
+    <color name="colorPrimary6">#0077c0</color>
+    <color name="colorPrimaryDark6">#0067b0</color>
+    <color name="textColorPrimary6">#FFFFFF</color>
+    <color name="colorPrimaryFontDark6">#FAFAFA</color>
+
+    <color name="colorPrimary7">#ffe9d1</color>
+    <color name="colorPrimaryDark7">#1e003d</color>
+    <color name="textColorPrimary7">#1e003d</color>
+    <color name="colorPrimaryFontDark7">#1e003d</color>
+    <color name="colorMainBackground7">#f7dec3</color>
+
+    <color name="colorAccent">#EC644B</color>
+    <color name="colorMainBackground">#EEEEEE</color>
+    <color name="colorWhite">#FFF</color>
+    <color name="colorBlack">#000</color>
+    <color name="colorAccentDark">#B71C1C</color>
+    <color name="colorLongSelection">#B0BEC5</color>
+    <color name="lightAccent">#efebe9</color>
+
+    <color name="whitePrimary">#FFF</color>
+
+
 </resources>

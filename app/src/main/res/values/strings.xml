@@ -1,3 +1,95 @@
 <resources>
-    <string name="app_name">Material Music Player</string>
+    <string name="app_name" translatable="false">Material Music Player</string>
+
+    <!--WALKTHROUGH-->
+    <string name="fragment1_heading">Search on Youtube</string>
+    <string name="fragment1_subHeading">Search the song you are listening to,directly on Youtube</string>
+    <string name="fragment2_heading">Enhance your Music</string>
+    <string name="fragment2_subHeading">Enable the equalizer </string>
+    <string name="fragment3_heading">Timer for your music</string>
+    <string name="fragment3_subHeading">Set a timer to stop the music after some time through Settings</string>
+    <string name="permission_rationale">The app will not be able to retrieve your Songs…Please Give the Permission</string>
+    <string name="start_now">START NOW</string>
+
+    <!-- MENU ITEMS -->
+    <string name="action_favourites">Favourites</string>
+    <string name="action_playlist">Add to Playlist</string>
+    <string name="action_youtube">Search this Song on Youtube</string>
+    <string name="action_search">Search for a Song</string>
+
+    <!--MAINACTIVITY-->
+    <string name="TAB1">Playlist</string>
+    <string name="TAB2">Albums</string>
+    <string name="TAB3">Artists</string>
+    <string name="TAB4">Tracks</string>
+    <string name="now_playing">Playing</string>
+    <string name="song_repeat_off_toast">Song Repeat Off</string>
+    <string name="song_repeat_on_toast">Song Repeat On</string>
+    <string name="opening_youtube">Opening Youtube</string>
+    <string name="song_added_to_playlist">Song Added to Playlist</string>
+
+
+    <!--PLAYLIST SELECT ACTIVITY-->
+    <string name="playlist_screen_placeholder">You can add to MULTIPLE playlists at once.</string>
+    <string name="did_not_select">You didn\'t select any playlist for your song!</string>
+    <string name="select_atleast_one">You must select at least 1 playlist</string>
+    <string name="created">Created</string>
+
+    <!--EXTRAS-->
+    <string name="play_all">Play All</string>
+    <string name="shuffle">Shuffle</string>
+    <string name="empty_state_message">Sorry..No Songs Found !!</string>
+    <string name="swipe_right_or_left_to_change_the_song">Swipe Right/Left or Double Tap on Album Art</string>
+    <string name="playing_all">Playling All Songs from</string>
+
+    <!--SETTINGS-->
+    <string name="settings_title">App Settings</string>
+
+    <string name="equalizer_heading">Equalizer</string>
+    <string name="sleep_timer_heading">Sleep Timer</string>
+    <string name="sleep_timer_subHeading">Turn off the music player automatically.</string>
+    <string name="help_heading">Help Us Translate</string>
+    <string name="help_subHeading">We need help in translating the app to your native language</string>
+    <string name="share_app">Share App</string>
+    <string name="recomment_it_to_others">Recommend it to others</string>
+    <string name="rate_us_heading">Rate us on Play Store!</string>
+    <string name="rate_us_subHeading">Show us some love and give us 5 stars</string>
+    <string name="Invalid_Time_Toast">Invalid Time</string>
+    <string name="translation_help">Translation Help</string>
+    <string name="translation_help_sub">Thank you for showing interest in translation of Material Music Player! .\n\n If you help us translate this app to another language,your name would be mentioned on the play store description as a token of appreciation.</string>
+
+
+    <!--CREATE PLAYLIST DIALOG-->
+    <string name="create_a_new_playlist">Create a New Playlist</string>
+    <string name="name">Name…</string>
+
+    <!--SLEEP TIME DIALOG-->
+    <string name="stop_music_after">Stop Music</string>
+    <string name="minutes">Minutes</string>
+    <string name="action_share">Share this Song</string>
+    <string name="theme">Color Theme</string>
+
+    <string name="app_walk1">Sleep Timer, Skip Folders,Color Themes</string>
+    <string name="app_walk2">Tap on Mini Player to open Main Player</string>
+    <string name="app_walk3">Want to search this song on Youtube?</string>
+    <string name="delete_these_songs">Delete these Songs?</string>
+    <string name="delete_warning">This operation will delete the selected songs from the device also</string>
+    <string name="empty_state_playlist_message">You did not create any playlist</string>
+    <string name="hide_music">Set minimum duration for Music Scan</string>
+    <string name="custom_time">Custom Time</string>
+    <string name="pick_time">Pick Time</string>
+    <string name="aborted">Aborted</string>
+    <string name="pick_theme">Pick</string>
+    <string name="movie">Movies Themes</string>
+    <string name="scroll_to_view_more">Scroll to view more</string>
+    <string name="hint_restart_app_to_reflect_changes">Hint: Restart App to reflect changes</string>
+    <string name="folders_to_scan">Select Folders to Scan</string>
+    <string name="exclude_folder">Exclude Folder</string>
+    <string name="set_the_folders_you_want_to_load_songs_from">Set the folders you want to load songs from</string>
+    <string name="save">Save</string>
+    <string name="equalizer_hint">Hint: Press Save if you want to save the Equalizer preset</string>
+    <string name="select_a_preset">Select a Preset :</string>
+    <string name="select_from_multiple_color_amp_movie_themes"><![CDATA[Select from multiple Color & Movie Themes]]></string>
+    <string name="play_song_directly_from_search_results">Play Song directly from search results</string>
+
 </resources>
