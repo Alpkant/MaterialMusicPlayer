@@ -59,4 +59,16 @@ public class StorageUtil {
         editor.clear();
         editor.commit();
     }
+
+    public void setServiceBound(boolean key){
+        preferences = context.getSharedPreferences(STORAGE,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("serviceBound",key);
+        editor.apply();
+    }
+
+    public boolean getServiceBound(){
+        preferences = context.getSharedPreferences(STORAGE,Context.MODE_PRIVATE);
+        return preferences.getBoolean("serviceBound",false);
+    }
 }

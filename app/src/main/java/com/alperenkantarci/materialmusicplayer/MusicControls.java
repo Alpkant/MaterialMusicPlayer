@@ -11,7 +11,6 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -30,6 +29,7 @@ import java.util.ArrayList;
  */
 
 // TODO(1) MAIN LISTE DÖNÜŞTE RUNNABLE KAPAT
+// TODO(!) ACTIVITY VE NOTIFICATION BAR SYNC DEĞİL DÜZELT
 // TODO(2) SETTINGSE THEME EKLE
 // TODO(3) ALBUM ARTLARI ALMANIN YOLUNU BUL
 
@@ -96,17 +96,17 @@ public class MusicControls extends AppCompatActivity{
 
 
 
-        Intent comingIntent = getIntent();
-        Bundle comingBundle = comingIntent.getExtras();
-        StorageUtil storage = new StorageUtil(getApplicationContext());
-        audioList = storage.loadAudio();
-        if(serviceBound)
-            mediaPlayer.stopMusic();
 
-        playAudio(audioIndex);
+
+        if(serviceBound){
+            mediaPlayer.stopMusic();
+        }
 
         try {
-            audioIndex = (Integer) comingBundle.get("audioIndex");
+            StorageUtil storage = new StorageUtil(getApplicationContext());
+            audioIndex = storage.loadAudioIndex();
+            audioList = storage.loadAudio();
+            playAudio(audioIndex);
             titleTextView.setText(audioList.get(audioIndex).getTitle());
             artistTextView.setText(audioList.get(audioIndex).getArtist());
             albumTextView.setText(audioList.get(audioIndex).getAlbum());
@@ -125,7 +125,6 @@ public class MusicControls extends AppCompatActivity{
                             Log.e("CURRENT", String.valueOf(mCurrentPosition));
                         currentSecondTextView.setText(millisecToTime(mCurrentPosition));
                         seekBar.setProgress(mCurrentPosition);
-
                     }else{
                         Log.e("MediaPlayer null","MediaPlayer null");
                     }
@@ -137,7 +136,6 @@ public class MusicControls extends AppCompatActivity{
                     }else{
                         mHandler.postDelayed(this, 1000);
                     }
-
                 }
             };
 
@@ -215,16 +213,7 @@ public class MusicControls extends AppCompatActivity{
         nextSong.setOnClickListener(controlListener);
         previousSong.setOnClickListener(controlListener);
         stopPlay.setOnClickListener(controlListener);
-
-
-        Log.e("CONTROL PAGE","CONTROLPAGE");
     }
-
-
-
-
-
-
 
     String millisecToTime(int millisec) {
         int sec = millisec/1000;
@@ -266,10 +255,11 @@ public class MusicControls extends AppCompatActivity{
     protected void onDestroy() {
         super.onDestroy();
         Log.e("onDestroy","onDestroy");
-       /* if (serviceBound) {
+        mHandler.removeCallbacks(myRunnable);
+        if (serviceBound) {
             unbindService(serviceConnection);
-            mediaPlayer.stopSelf();
-            }*/
+            //mediaPlayer.stopSelf();
+            }
     }
 
 
@@ -279,7 +269,6 @@ public class MusicControls extends AppCompatActivity{
             MediaPlayerService.LocalBinder binder = (MediaPlayerService.LocalBinder) iBinder;
             mediaPlayer = binder.getService();
             serviceBound = true;
-            Log.i("Service Bound", "SERVICE BOUNDED");
         }
 
         @Override
@@ -291,6 +280,7 @@ public class MusicControls extends AppCompatActivity{
 
     private void playAudio(int audioIndex) {
         if (!serviceBound) {
+            Log.e("Service","Bounding Service");
             Intent playerIntent = new Intent(this, MediaPlayerService.class);
             startService(playerIntent);
             bindService(playerIntent, serviceConnection, Context.BIND_AUTO_CREATE);
@@ -298,9 +288,12 @@ public class MusicControls extends AppCompatActivity{
             //Service is active
             //Send a broadcast to the service -> PLAY_NEW_AUDIO
 
+            Log.e("Service","Service active new audio");
             Intent broadcastIntent = new Intent(Broadcast_PLAY_NEW_AUDIO);
             sendBroadcast(broadcastIntent);
         }
+        Intent broadcastIntent = new Intent(Broadcast_PLAY_NEW_AUDIO);
+        sendBroadcast(broadcastIntent);
     }
 
     private void updateMetaData(){

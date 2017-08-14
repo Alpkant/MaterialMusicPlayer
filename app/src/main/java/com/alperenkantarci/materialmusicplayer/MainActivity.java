@@ -78,28 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private void playAudio(int audioIndex) {
-        if (!serviceBound) {
-            //Store Serializable audioList to SharedPreferences
-            StorageUtil storage = new StorageUtil(getApplicationContext());
-            storage.storeAudio(audioList);
-            storage.storeAudioIndex(audioIndex);
-            /*
-            Intent playerIntent = new Intent(this, MediaPlayerService.class);
-            startService(playerIntent);
-            bindService(playerIntent, serviceConnection, Context.BIND_AUTO_CREATE);*/
-        } else {
-            //Store the new audioIndex to SharedPreferences
-            StorageUtil storage = new StorageUtil(getApplicationContext());
-            storage.storeAudioIndex(audioIndex);
 
-            //Service is active
-            //Send a broadcast to the service -> PLAY_NEW_AUDIO
-            /*
-            Intent broadcastIntent = new Intent(Broadcast_PLAY_NEW_AUDIO);
-            sendBroadcast(broadcastIntent); */
-        }
-    }
 
     private void loadAudio() {
         ContentResolver contentResolver = getContentResolver();
@@ -147,12 +126,11 @@ public class MainActivity extends AppCompatActivity {
                 recyclerView.addOnItemTouchListener(new CustomTouchListener(this, new CustomTouchListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        playAudio(position);
+                        StorageUtil storage = new StorageUtil(getApplicationContext());
+                        storage.storeAudioIndex(position);
+                        storage.storeAudio(audioList);
                         Intent newPage = new Intent(MainActivity.this, MusicControls.class);
-                        newPage.putExtra("audioList",audioList);
-                        newPage.putExtra("audioIndex",position);
                         startActivity(newPage);
-
                     }
                 }));
             }
