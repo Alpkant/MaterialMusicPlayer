@@ -30,10 +30,10 @@ public class ArtistAdapter extends RecyclerView.Adapter {
 
     public ArtistAdapter(Context context, RecyclerView recyclerView, Cursor cursor) {
 
-        dataCursor=cursor;
-           LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView
-                    .getLayoutManager();
-            c = context;
+        dataCursor = cursor;
+        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView
+                .getLayoutManager();
+        c = context;
     }
 
 
@@ -58,7 +58,7 @@ public class ArtistAdapter extends RecyclerView.Adapter {
             artist = artist.substring(0, 32) + "...";
 
         ((ArtistViewHolder) holder).name.setText(artist);
-        ((ArtistViewHolder) holder).artist=new Artist(artist,id);
+        ((ArtistViewHolder) holder).artist = new Artist(artist, id);
 
     }
 
@@ -84,7 +84,7 @@ public class ArtistAdapter extends RecyclerView.Adapter {
         return (dataCursor == null) ? 0 : dataCursor.getCount();
     }
 
-    class ArtistViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ArtistViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView imageView;
         TextView name;
@@ -98,10 +98,11 @@ public class ArtistAdapter extends RecyclerView.Adapter {
             this.ctx = context;
 
             name = (TextView) v.findViewById(R.id.name);
-            imageView= (ImageView) v.findViewById(R.id.artist_art_card);
-            cardView= (CardView) v.findViewById(R.id.artist_list_card);
+            imageView = (ImageView) v.findViewById(R.id.artist_art_card);
+            cardView = (CardView) v.findViewById(R.id.artist_list_card);
             cardView.setOnClickListener(this);
         }
+
         private void fragmentJump(Artist artist) {
             scrollingFragment = new ScrollingFragment();
             Bundle bundle = new Bundle();
@@ -120,9 +121,7 @@ public class ArtistAdapter extends RecyclerView.Adapter {
                 MainActivity mainActivity = (MainActivity) c;
                 mainActivity.switchContent(id, fragment);
             }
-
         }
-
 
         @Override
         public void onClick(View v) {
