@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitePrimary">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/linearLayout3"
+        android:background="@color/whitePrimary" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_skip"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp">
+
+        <Button
+            android:id="@+id/bt1"
+            android:layout_width="7dp"
+            android:layout_height="7dp"
+            android:background="@drawable/walkthrough_selected" />
+
+        <Button
+            android:id="@+id/bt2"
+            android:layout_width="7dp"
+            android:layout_height="7dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/walkthrough_unselected" />
+
+        <Button
+            android:id="@+id/bt3"
+            android:layout_width="7dp"
+            android:layout_height="7dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/walkthrough_unselected" />
+
+        <Button
+            android:id="@+id/bt4"
+            android:layout_width="7dp"
+            android:layout_height="7dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/walkthrough_unselected" />
+
+        <Button
+            android:id="@+id/bt5"
+            android:layout_width="7dp"
+            android:layout_height="7dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/walkthrough_unselected" />
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/btn_skip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#f5f5f5"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:padding="15dp">
+
+        <com.alperenkantarci.materialmusicplayer.widgets.MainTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/start_now"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryFontDark"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

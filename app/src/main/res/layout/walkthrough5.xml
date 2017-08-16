@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitePrimary">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/size100dp"
+            android:layout_height="@dimen/size100dp"
+            app:srcCompat="@drawable/ic_folder"
+            android:tint="@color/colorAccentDark"/>
+
+        <com.alperenkantarci.materialmusicplayer.widgets.MainTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/exclude_folder"
+            android:textColor="@color/colorPrimaryFontDark"
+            android:textSize="@dimen/size23sp"
+            android:textStyle="bold" />
+
+        <com.alperenkantarci.materialmusicplayer.widgets.MainTextViewSub
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/set_the_folders_you_want_to_load_songs_from"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryFontDark"
+            android:textSize="@dimen/size15sp" />
+
+    </LinearLayout>
+</RelativeLayout>
