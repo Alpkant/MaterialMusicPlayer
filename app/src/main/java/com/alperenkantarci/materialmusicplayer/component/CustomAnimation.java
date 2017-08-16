@@ -10,7 +10,7 @@ import com.alperenkantarci.materialmusicplayer.R;
 
 /**
  * Created by Alperen on 15/3/17.
-        */
+ */
 
 public class CustomAnimation {
 

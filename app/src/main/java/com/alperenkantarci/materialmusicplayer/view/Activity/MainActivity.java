@@ -60,7 +60,6 @@ import android.widget.Toast;
 
 import com.alperenkantarci.materialmusicplayer.view.Fragment.AlbumFragment;
 import com.alperenkantarci.materialmusicplayer.view.Fragment.ArtistFragment;
-import com.alperenkantarci.materialmusicplayer.view.Fragment.PlaylistFragment;
 import com.alperenkantarci.materialmusicplayer.view.Fragment.ScrollingFragment;
 import com.alperenkantarci.materialmusicplayer.view.Fragment.SongsFragment;
 import com.alperenkantarci.materialmusicplayer.R;
@@ -70,19 +69,16 @@ import com.alperenkantarci.materialmusicplayer.component.SharedPreferenceSingelt
 import com.alperenkantarci.materialmusicplayer.component.ThemeSelector;
 import com.alperenkantarci.materialmusicplayer.executor.FilePathFromId;
 import com.alperenkantarci.materialmusicplayer.executor.Interfaces.AdapterToActivityListener;
-import com.alperenkantarci.materialmusicplayer.executor.Interfaces.PlaylistRefreshListener;
 import com.alperenkantarci.materialmusicplayer.executor.Interfaces.SongRefreshListener;
 import com.alperenkantarci.materialmusicplayer.executor.MyApplication;
 import com.alperenkantarci.materialmusicplayer.executor.OnSwipeTouchListener;
 import com.alperenkantarci.materialmusicplayer.executor.PlaySongExec;
 import com.alperenkantarci.materialmusicplayer.model.MusicService;
 import com.alperenkantarci.materialmusicplayer.model.Pojo.Song;
-import com.alperenkantarci.materialmusicplayer.utils.WaveHelper;
 import com.alperenkantarci.materialmusicplayer.utils.ZoomOutPageTransformer;
 import com.alperenkantarci.materialmusicplayer.widgets.EqualizerView;
 import com.alperenkantarci.materialmusicplayer.widgets.MainTextView;
 import com.bumptech.glide.Glide;
-import com.gelitenight.waveview.library.WaveView;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
 
@@ -91,7 +87,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends AppCompatActivity implements ScrollingFragment.OnFragmentInteractionListener, PlaylistFragment.OnFragmentInteractionListener, AdapterToActivityListener {
+public class MainActivity extends AppCompatActivity implements ScrollingFragment.OnFragmentInteractionListener, AdapterToActivityListener {
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -119,10 +115,8 @@ public class MainActivity extends AppCompatActivity implements ScrollingFragment
     private ViewPager mViewPager;
     private TabLayout tabLayout;
     private Toolbar toolbarPlayer, toolbarContext, mToolbar;
-    private WaveHelper mWaveHelper;
     private int mBorderColor = Color.parseColor("#e74c3c");
     private SongRefreshListener songRefreshListener;
-    private PlaylistRefreshListener playlistRefreshListener;
     private MainTextView toolbar_context_title;
     String[] titles;
     private static final int REQUEST_PERMISSION = 0;
@@ -193,7 +187,6 @@ public class MainActivity extends AppCompatActivity implements ScrollingFragment
                             play_pause.setImageResource(R.drawable.pause);
                             play_pause_mini.setImageResource(R.drawable.pause);
                             musicPlaying = true;
-                            mWaveHelper.start();
                             equalizerView.animateBars();
                             equalizerView.setVisibility(View.VISIBLE);
                             break;
@@ -202,7 +195,6 @@ public class MainActivity extends AppCompatActivity implements ScrollingFragment
                             play_pause.setImageResource(R.drawable.play);
                             play_pause_mini.setImageResource(R.drawable.play);
                             musicPlaying = false;
-                            mWaveHelper.cancel();
                             equalizerView.setVisibility(View.GONE);
                             equalizerView.stopBars();
                             break;
@@ -218,7 +210,6 @@ public class MainActivity extends AppCompatActivity implements ScrollingFragment
             play_pause.setImageResource(R.drawable.play);
             play_pause_mini.setImageResource(R.drawable.play);
             musicPlaying = false;
-            mWaveHelper.cancel();
         }
     };
 
@@ -363,17 +354,8 @@ public class MainActivity extends AppCompatActivity implements ScrollingFragment
             }
         });
 
-        final WaveView waveView = (WaveView) findViewById(R.id.wave);
-        int mBorderWidth = 5;
-        waveView.setBorder(mBorderWidth, mBorderColor);
 
-        // set wave view
-        mWaveHelper = new WaveHelper(waveView);
-        waveView.setShapeType(WaveView.ShapeType.CIRCLE);
-        waveView.setWaveColor(
-                Color.parseColor("#D32F2F"),
-                Color.parseColor("#F44336"));
-        mWaveHelper.start();
+
 
     }
 
@@ -548,11 +530,7 @@ public class MainActivity extends AppCompatActivity implements ScrollingFragment
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 Song song = songList.get(musicService.getCurrentIndex());
-                if (item.getItemId() == R.id.playlist) {
-                    Intent i = new Intent(MainActivity.this, SelectPlaylistActivity.class);
-                    startActivityForResult(i, 1);
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                } else if (item.getItemId() == R.id.youtube) {
+                if (item.getItemId() == R.id.youtube) {
                     if (musicPlaying) {
                         musicService.togglePlay();
                     }
@@ -584,27 +562,9 @@ public class MainActivity extends AppCompatActivity implements ScrollingFragment
             }
         });
         toolbarContext = (Toolbar) findViewById(R.id.toolbar_context);
-        toolbarContext.inflateMenu(R.menu.context_menu);
         toolbar_context_title = (MainTextView) findViewById(R.id.toolbar_context_title);
         toolbarContext.setNavigationIcon(R.drawable.ic_back);
-        toolbarContext.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.playlist) {
-                    Intent i = new Intent(MainActivity.this, SelectPlaylistActivity.class);
-                    startActivityForResult(i, 2);
-                } else if (item.getItemId() == R.id.delete) {
-                    openDeleteDialog();
-                }
-                return true;
-            }
-        });
-        toolbarContext.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                removeContentSelection();
-            }
-        });
+
     }
 
     private void removeContentSelection() {
@@ -848,34 +808,6 @@ public class MainActivity extends AppCompatActivity implements ScrollingFragment
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_CANCELED) {
 
-        } else if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            String str = data.getExtras().getString("selected_playlist");
-            if (!str.equalsIgnoreCase("")) {
-                long id = songList.get(musicService.getCurrentIndex()).getID();
-                new MyApplication(MainActivity.this).getWritableDatabase().addSongToPlaylists(id, str);
-                Toast.makeText(MainActivity.this, getString(R.string.song_added_to_playlist), Toast.LENGTH_SHORT).show();
-                playlistRefreshListener.OnPlaylistRefresh();
-            }
-        } else if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
-            String str = data.getStringExtra("selected_playlist");
-            toolbarContext.setVisibility(View.GONE);
-            mToolbar.setVisibility(View.VISIBLE);
-            miniPlayer.setVisibility(View.VISIBLE);
-            shuffle_play.show();
-            long array[] = new long[selectedID.size()];
-            int c = 0;
-            for (long id : selectedID) {
-                array[c] = id;
-                c++;
-            }
-            new MyApplication(MainActivity.this).getWritableDatabase().addMultipleSongToMultiplePlaylist(str, array);
-            playlistRefreshListener.OnPlaylistRefresh();
-
-            toolbarContext.setVisibility(View.GONE);
-            mToolbar.setVisibility(View.VISIBLE);
-            miniPlayer.setVisibility(View.VISIBLE);
-            songRefreshListener.OnContextBackPressed();
-
         }
         if (mainPlayer.getVisibility() == View.VISIBLE) {
             hideMainPlayer();
@@ -898,9 +830,6 @@ public class MainActivity extends AppCompatActivity implements ScrollingFragment
         this.songRefreshListener = refreshListener;
     }
 
-    public void setPlaylistRefreshListener(PlaylistRefreshListener refreshListener) {
-        this.playlistRefreshListener = refreshListener;
-    }
 
     @Override
     public void onTrackLongPress(int c, long songId, boolean songAdded) {
@@ -933,7 +862,7 @@ public class MainActivity extends AppCompatActivity implements ScrollingFragment
 
     private class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        String tabTitles[] = new String[]{getResources().getString(R.string.TAB4), getResources().getString(R.string.TAB1), getResources().getString(R.string.TAB2), getResources().getString(R.string.TAB3)};
+        String tabTitles[] = new String[]{getResources().getString(R.string.TAB4),  getResources().getString(R.string.TAB2), getResources().getString(R.string.TAB3)};
 
         //String tabTitles[] = new String[]{getResources().getString(R.string.TAB4), getResources().getString(R.string.TAB2), getResources().getString(R.string.TAB3)};
         SectionsPagerAdapter(FragmentManager fm) {
@@ -946,10 +875,8 @@ public class MainActivity extends AppCompatActivity implements ScrollingFragment
                 case 0:
                     return SongsFragment.newInstance();
                 case 1:
-                    return PlaylistFragment.newInstance();
-                case 2:
                     return AlbumFragment.newInstance();
-                case 3:
+                case 2:
                     return ArtistFragment.newInstance();
 
             }
@@ -958,7 +885,7 @@ public class MainActivity extends AppCompatActivity implements ScrollingFragment
 
         @Override
         public int getCount() {
-            return 4;
+            return 3;
         }
 
         @Override

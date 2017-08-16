@@ -152,7 +152,6 @@ public class MusicService extends Service implements
         int duration = mp.getDuration();
         mSeekBar.setMax(duration);
         mSeekBar.postDelayed(mProgressRunner, mInterval);
-
     }
 
     @Override

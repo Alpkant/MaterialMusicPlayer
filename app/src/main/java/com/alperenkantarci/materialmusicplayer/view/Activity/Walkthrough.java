@@ -84,7 +84,7 @@ public class Walkthrough extends AppCompatActivity implements LoaderManager.Load
 
         @Override
         public void onPageSelected(int position) {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < layouts.length; i++) {
                 findViewById(AppConstants.buttonId[i]).setBackground(getResources().getDrawable(R.drawable.walkthrough_unselected));
             }
             findViewById(AppConstants.buttonId[position]).setBackground(getResources().getDrawable(R.drawable.walkthrough_selected));
@@ -159,7 +159,7 @@ public class Walkthrough extends AppCompatActivity implements LoaderManager.Load
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0])
                         || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[1])) {
                     Snackbar.make(findViewById(android.R.id.content),
-                            "Permissions needed to Access Songs and to stop/play music during call",
+                            "Permissions needed to access songs and to stop/play music during call",
                             Snackbar.LENGTH_INDEFINITE).setAction("ENABLE",
                             new View.OnClickListener() {
                                 @Override

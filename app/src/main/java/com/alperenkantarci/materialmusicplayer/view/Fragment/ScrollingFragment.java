@@ -245,7 +245,6 @@ public class ScrollingFragment extends Fragment implements LoaderManager.LoaderC
 
             @Override
             public void onDeleteClick(int position) {
-                new MyApplication(getContext()).getWritableDatabase().deleteSongFromPlaylist(Name, songMainArrayList.get(position).getID());
                 nestedFragmentAdapter.delete(position);
             }
         });

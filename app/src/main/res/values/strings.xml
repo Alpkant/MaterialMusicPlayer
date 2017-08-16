@@ -44,7 +44,7 @@
 
     <!--SETTINGS-->
     <string name="settings_title">App Settings</string>
-
+    <string name="switch_between_the_light_and_dark_app_themes">Switch between different theme colors</string>
     <string name="equalizer_heading">Equalizer</string>
     <string name="sleep_timer_heading">Sleep Timer</string>
     <string name="sleep_timer_subHeading">Turn off the music player automatically.</string>

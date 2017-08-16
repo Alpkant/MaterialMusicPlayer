@@ -156,44 +156,6 @@ public class AppSettingActivity extends AppCompatActivity {
 
     }
 
-    public void changeMovieTheme(View v) {
-        dialog = new Dialog(this);
-        dialog.setContentView(R.layout.movie_theme_dialog);
-        View.OnClickListener clickListener=new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()){
-                    case R.id.harry:
-                        sharedPreferenceSingelton.saveAs(AppSettingActivity.this, "Themes", 8);
-                        break;
-                    case R.id.minions:
-                        sharedPreferenceSingelton.saveAs(AppSettingActivity.this, "Themes", 9);
-                        break;
-                    case R.id.iron:
-                        sharedPreferenceSingelton.saveAs(AppSettingActivity.this, "Themes", 10);
-                        break;
-                    case R.id.deadpool:
-                        sharedPreferenceSingelton.saveAs(AppSettingActivity.this, "Themes", 11);
-                        break;
-                }
-                dialog.dismiss();
-                finish();
-                Intent intent = IntentCompat.makeMainActivity(new ComponentName(
-                        AppSettingActivity.this, MainActivity.class));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        };
-        dialog.findViewById(R.id.harry).setOnClickListener(clickListener);
-        dialog.findViewById(R.id.minions).setOnClickListener(clickListener);
-        dialog.findViewById(R.id.iron).setOnClickListener(clickListener);
-        dialog.findViewById(R.id.deadpool).setOnClickListener(clickListener);
-        try{
-            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        }catch (NullPointerException e){}
-        dialog.show();
-
-    }
 
     public void openSleepDialog(View v) {
         dialog = new Dialog(this);
@@ -428,21 +390,8 @@ public class AppSettingActivity extends AppCompatActivity {
             ImageView tick = (ImageView) itemView.findViewById(R.id.tick);
 
             Button button = (Button) itemView.findViewById(R.id.button);
-            Button buyButton = (Button) itemView.findViewById(R.id.buttonBuy);
-            Button preview = (Button) itemView.findViewById(R.id.show);
-            int x = sharedPreferenceSingelton.getSavedInt(AppSettingActivity.this, "Themes");
-            if (x == position) {
-                tick.setImageResource(R.drawable.ic_check);
-            }
 
-            if(position == 0)
-                preview.setVisibility(View.GONE);
 
-            if ((position == 2 && !AppConstants.theme3) || (position == 3 && !AppConstants.theme4) || (position == 4 && !AppConstants.theme5) ||
-                    (position == 5 && !AppConstants.theme6) || (position == 6 && !AppConstants.theme7) || (position == 7 && !AppConstants.theme8)) {
-                button.setVisibility(View.GONE);
-                buyButton.setVisibility(View.VISIBLE);
-            }
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -474,33 +423,6 @@ public class AppSettingActivity extends AppCompatActivity {
                 }
             });
 
-            preview.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (position == 1) {
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AppConstants.THEME_URL+"#Black"));
-                        startActivity(browserIntent);
-                    } else if (position == 2) {
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AppConstants.THEME_URL+"#Walnut"));
-                        startActivity(browserIntent);
-                    } else if (position == 3) {
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AppConstants.THEME_URL+"#Matterhorn"));
-                        startActivity(browserIntent);
-                    } else if (position == 4) {
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AppConstants.THEME_URL+"#Orchid"));
-                        startActivity(browserIntent);
-                    } else if (position == 5) {
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AppConstants.THEME_URL+"#bluewood"));
-                        startActivity(browserIntent);
-                    } else if (position == 6) {
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AppConstants.THEME_URL+"#Lockmara"));
-                        startActivity(browserIntent);
-                    } else if (position == 7) {
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AppConstants.THEME_URL+"#Karry"));
-                        startActivity(browserIntent);
-                    }
-                }
-            });
 
             container.addView(itemView);
 
@@ -545,10 +467,6 @@ public class AppSettingActivity extends AppCompatActivity {
 
         }
     };
-
-
-
-
 
     @Override
     protected void onDestroy() {

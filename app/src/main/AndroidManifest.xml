@@ -48,9 +48,6 @@
             android:enabled="true" />
 
         <activity
-            android:name=".view.Activity.SelectPlaylistActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.Activity.AppSettingActivity"
             android:screenOrientation="portrait" />
     </application>

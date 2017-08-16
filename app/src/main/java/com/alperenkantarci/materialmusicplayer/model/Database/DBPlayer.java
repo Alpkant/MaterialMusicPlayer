@@ -9,8 +9,6 @@ import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import com.alperenkantarci.materialmusicplayer.component.SharedPreferenceSingelton;
-import com.alperenkantarci.materialmusicplayer.model.Pojo.Playlist;
-import com.alperenkantarci.materialmusicplayer.model.Pojo.PlaylistSelect;
 
 import java.util.ArrayList;
 
@@ -87,80 +85,8 @@ public class DBPlayer {
     }
 
 
-    public void addSongToPlaylists(long id, String playlistNames) {
-        String S[] = convertStringToArray(playlistNames);
 
-        for (String value : S) {
-            String sql = "INSERT INTO " + PlayerHelper.PLAYLIST_TRACKS_TABLE_NAME + " (" + PlayerHelper.PLAYLIST_NAME + "," + PlayerHelper.PLAYLIST_SONG_ID + ") VALUES(?,?);";
-            SQLiteStatement statement = mDatabase.compileStatement(sql);
-            mDatabase.beginTransaction();
-            statement.clearBindings();
-            statement.bindString(1, value);
-            statement.bindLong(2, id);
-            statement.execute();
-            mDatabase.setTransactionSuccessful();
-            mDatabase.endTransaction();
 
-        }
-
-        mDatabase.close();
-    }
-
-    public void addMultipleSongToMultiplePlaylist(String playlistNames, long id[]) {
-        String S[] = convertStringToArray(playlistNames);
-        for (String value : S) {
-            for (long anId : id) {
-                String sql = "INSERT INTO " + PlayerHelper.PLAYLIST_TRACKS_TABLE_NAME + " (" + PlayerHelper.PLAYLIST_NAME + "," + PlayerHelper.PLAYLIST_SONG_ID + ") VALUES(?,?);";
-                SQLiteStatement statement = mDatabase.compileStatement(sql);
-                mDatabase.beginTransaction();
-                statement.clearBindings();
-                statement.bindString(1, value);
-                statement.bindLong(2, anId);
-                statement.execute();
-                mDatabase.setTransactionSuccessful();
-                mDatabase.endTransaction();
-            }
-        }
-        mDatabase.close();
-    }
-
-    public ArrayList<Playlist> readPlaylists() {
-        ArrayList<Playlist> playlists = new ArrayList<>();
-        String[] columns = {
-                PlayerHelper.PLAYLIST_NAME
-        };
-        Cursor cursor = mDatabase.query(true, PlayerHelper.PLAYLIST_TRACKS_TABLE_NAME, columns, null, null, PlayerHelper.PLAYLIST_NAME, null, PlayerHelper.PLAYLIST_NAME, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                Playlist playlist = new Playlist();
-                playlist.setName(cursor.getString(cursor.getColumnIndex(PlayerHelper.PLAYLIST_NAME)));
-                playlists.add(playlist);
-            }
-            while (cursor.moveToNext());
-            cursor.close();
-        }
-        mDatabase.close();
-        return playlists;
-    }
-    public ArrayList<PlaylistSelect> readPlaylistsSelect() {
-        ArrayList<PlaylistSelect> playlists = new ArrayList<>();
-        String[] columns = {
-                PlayerHelper.PLAYLIST_NAME
-        };
-        Cursor cursor = mDatabase.query(true, PlayerHelper.PLAYLIST_TRACKS_TABLE_NAME, columns, null, null, PlayerHelper.PLAYLIST_NAME, null, PlayerHelper.PLAYLIST_NAME, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                PlaylistSelect playlist = new PlaylistSelect();
-                playlist.setName(cursor.getString(cursor.getColumnIndex(PlayerHelper.PLAYLIST_NAME)));
-                playlist.setSelected(false);
-                playlists.add(playlist);
-            }
-            while (cursor.moveToNext());
-            cursor.close();
-        }
-        mDatabase.close();
-        return playlists;
-    }
 
     public ArrayList<Long> readSongsFromPlaylist(String playlist) {
         ArrayList<Long> songlist = new ArrayList<>();
@@ -181,20 +107,6 @@ public class DBPlayer {
         return songlist;
     }
 
-    public void deletePlaylist(String name) {
-        String whereClause = PlayerHelper.PLAYLIST_NAME + "=?";
-        String whereArgs[] = {name};
-        mDatabase.delete(PlayerHelper.PLAYLIST_TRACKS_TABLE_NAME, whereClause, whereArgs);
-        mDatabase.close();
-        Log.d("Playlist", "Deleted");
-    }
-
-    public void deleteSongFromPlaylist(String playlist, long id){
-        String whereClause = PlayerHelper.PLAYLIST_NAME + "=? AND " + PlayerHelper.PLAYLIST_SONG_ID + "=?" ;
-        String whereArgs[] = {playlist,""+id};
-        mDatabase.delete(PlayerHelper.PLAYLIST_TRACKS_TABLE_NAME, whereClause, whereArgs);
-        mDatabase.close();
-    }
 
     private class PlayerHelper extends SQLiteOpenHelper {
         private static final String DB_NAME = "playerDB";
