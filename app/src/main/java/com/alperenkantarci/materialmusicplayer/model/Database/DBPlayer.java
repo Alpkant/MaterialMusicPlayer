@@ -25,7 +25,7 @@ public class DBPlayer {
         c = context;
         playerHelper = new PlayerHelper(context);
         mDatabase = playerHelper.getWritableDatabase();
-        sharedPreferenceSingelton=new SharedPreferenceSingelton();
+        sharedPreferenceSingelton = new SharedPreferenceSingelton();
     }
 
     public void insertFavourite(long id) {
@@ -47,7 +47,7 @@ public class DBPlayer {
         mDatabase.close();
     }
 
-    public boolean isFavourite(long id){
+    public boolean isFavourite(long id) {
         boolean b = false;
         String[] columns = {
                 PlayerHelper.COLUMN_ID
@@ -84,17 +84,13 @@ public class DBPlayer {
         return songlist;
     }
 
-
-
-
-
     public ArrayList<Long> readSongsFromPlaylist(String playlist) {
         ArrayList<Long> songlist = new ArrayList<>();
         String[] columns = {
                 PlayerHelper.PLAYLIST_SONG_ID
         };
-        String selection="PLAYLIST_NAME=?";
-        String args[]={""+playlist};
+        String selection = "PLAYLIST_NAME=?";
+        String args[] = {"" + playlist};
         Cursor cursor = mDatabase.query(PlayerHelper.PLAYLIST_TRACKS_TABLE_NAME, columns, selection, args, null, null, null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
