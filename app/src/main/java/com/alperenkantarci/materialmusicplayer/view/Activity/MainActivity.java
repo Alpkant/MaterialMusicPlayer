@@ -223,31 +223,7 @@ public class MainActivity extends AppCompatActivity implements ScrollingFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         background = (ImageView) findViewById(R.id.back);
-        if (sharedPreferenceSingleton.getSavedInt(this, "Themes") == 8) {
-            Glide
-                    .with(MainActivity.this)
-                    .load(R.drawable.harry_potter)
-                    .dontAnimate()
-                    .into(background);
-        } else if (sharedPreferenceSingleton.getSavedInt(this, "Themes") == 9) {
-            Glide
-                    .with(MainActivity.this)
-                    .load(R.drawable.minions)
-                    .dontAnimate()
-                    .into(background);
-        } else if (new SharedPreferenceSingelton().getSavedInt(this, "Themes") == 10) {
-            Glide
-                    .with(MainActivity.this)
-                    .load(R.drawable.iron_man)
-                    .dontAnimate()
-                    .into(background);
-        } else if (new SharedPreferenceSingelton().getSavedInt(this, "Themes") == 11) {
-            Glide
-                    .with(MainActivity.this)
-                    .load(R.drawable.deadpool)
-                    .dontAnimate()
-                    .into(background);
-        }
+
         checkPermission();
         toolbarsInitiallize();
         initiallize();

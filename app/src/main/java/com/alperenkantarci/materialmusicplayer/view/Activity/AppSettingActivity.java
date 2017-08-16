@@ -93,31 +93,7 @@ public class AppSettingActivity extends AppCompatActivity {
     private void init() {
         // Toolbar
         ImageView background = (ImageView) findViewById(R.id.back);
-        if (sharedPreferenceSingelton.getSavedInt(this, "Themes") == 8) {
-            Glide
-                    .with(this)
-                    .load(R.drawable.harry_potter)
-                    .dontAnimate()
-                    .into(background);
-        } else if (sharedPreferenceSingelton.getSavedInt(this, "Themes") == 9) {
-            Glide
-                    .with(this)
-                    .load(R.drawable.minions)
-                    .dontAnimate()
-                    .into(background);
-        } else if (sharedPreferenceSingelton.getSavedInt(this, "Themes") == 10) {
-            Glide
-                    .with(this)
-                    .load(R.drawable.iron_man)
-                    .dontAnimate()
-                    .into(background);
-        } else if (sharedPreferenceSingelton.getSavedInt(this, "Themes") == 11) {
-            Glide
-                    .with(this)
-                    .load(R.drawable.deadpool)
-                    .dontAnimate()
-                    .into(background);
-        }
+
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_back);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
