@@ -14,8 +14,8 @@
     <!-- MENU ITEMS -->
     <string name="action_favourites">Favourites</string>
     <string name="action_playlist">Add to Playlist</string>
-    <string name="action_youtube">Search this Song on Youtube</string>
-    <string name="action_search">Search for a Song</string>
+    <string name="action_youtube">Search this song on Youtube</string>
+    <string name="action_search">Search for a song</string>
 
     <!--MAINACTIVITY-->
     <string name="TAB2">Albums</string>

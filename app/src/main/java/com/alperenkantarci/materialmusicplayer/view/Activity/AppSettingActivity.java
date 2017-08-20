@@ -325,18 +325,6 @@ public class AppSettingActivity extends AppCompatActivity {
                         sharedPreferenceSingelton.saveAs(AppSettingActivity.this, "Themes", 0);
                     } else if (position == 1) {
                         sharedPreferenceSingelton.saveAs(AppSettingActivity.this, "Themes", 1);
-                    } else if (position == 2) {
-                        sharedPreferenceSingelton.saveAs(AppSettingActivity.this, "Themes", 2);
-                    } else if (position == 3) {
-                        sharedPreferenceSingelton.saveAs(AppSettingActivity.this, "Themes", 3);
-                    } else if (position == 4) {
-                        sharedPreferenceSingelton.saveAs(AppSettingActivity.this, "Themes", 4);
-                    } else if (position == 5) {
-                        sharedPreferenceSingelton.saveAs(AppSettingActivity.this, "Themes", 5);
-                    } else if (position == 6) {
-                        sharedPreferenceSingelton.saveAs(AppSettingActivity.this, "Themes", 6);
-                    } else if (position == 7) {
-                        sharedPreferenceSingelton.saveAs(AppSettingActivity.this, "Themes", 7);
                     }
                     dialog.dismiss();
                     // recreate();
