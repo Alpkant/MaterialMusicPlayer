@@ -54,10 +54,6 @@ public class AppSettingActivity extends AppCompatActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
-    private static final String TAG = "In-App Billing";
-
-
-    boolean billinSupported = false;
 
     private Dialog dialog;
     private EditText min;
@@ -104,10 +100,6 @@ public class AppSettingActivity extends AppCompatActivity {
             }
         });
 
-        short_time = (TextView) findViewById(R.id.time_for_short_music);
-        previous_set = sharedPreferenceSingelton.getSavedInt(this, "Short_music_time");
-        String time = previous_set + " seconds";
-        short_time.setText(time);
 
     }
 
@@ -214,51 +206,8 @@ public class AppSettingActivity extends AppCompatActivity {
         }
     }
 
-    public void helpUsTranslate(View v) {
-        dialog = new Dialog(this);
-        dialog.setContentView(R.layout.translation);
-        try{
-            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        }catch (NullPointerException e){}
-        dialog.show();
-
-    }
-
-    public void hide_short(View v) {
-        dialog = new Dialog(this);
-        dialog.setContentView(R.layout.short_music_hide_dialog);
-        try{
-            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        }catch (NullPointerException e){
-            Log.d("NullPointer","yes");
-        }
-        dialog.show();
-
-        Button done = (Button) dialog.findViewById(R.id.done);
-        Button cancel = (Button) dialog.findViewById(R.id.cancel);
-        seekBar = (HoloCircleSeekBar) dialog.findViewById(R.id.seekBar);
-        previous_set = sharedPreferenceSingelton.getSavedInt(this, "Short_music_time");
-        if (previous_set != 0) {
-            seekBar.setValue(previous_set);
-        }
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String time = seekBar.getValue() + " Seconds";
-                short_time.setText(time);
-                sharedPreferenceSingelton.saveAs(AppSettingActivity.this, "Short_music_time", seekBar.getValue());
-                dialog.dismiss();
-            }
-        });
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
 
 
-    }
 
     @Override
     public void onBackPressed() {

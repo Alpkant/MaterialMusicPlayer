@@ -100,14 +100,12 @@ public class MusicService extends Service implements
                         if (player.isPlaying()) {
                             isPausedOnCall = true;
                             togglePlay();
-
                         }
                         break;
                     case TelephonyManager.CALL_STATE_RINGING:
                         if (player.isPlaying()) {
                             isPausedOnCall = true;
                             togglePlay();
-
                         }
                         break;
                     case TelephonyManager.CALL_STATE_IDLE:
@@ -115,7 +113,6 @@ public class MusicService extends Service implements
                             if (isPausedOnCall) {
                                 isPausedOnCall = false;
                                 togglePlay();
-
                             }
                         }
 
