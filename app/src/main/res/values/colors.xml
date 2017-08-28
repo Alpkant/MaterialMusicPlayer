@@ -37,6 +37,8 @@
     <color name="textColorPrimary6">#FFFFFF</color>
     <color name="colorPrimaryFontDark6">#FAFAFA</color>
 
+
+
     <color name="colorPrimary7">#ffe9d1</color>
     <color name="colorPrimaryDark7">#1e003d</color>
     <color name="textColorPrimary7">#1e003d</color>
@@ -52,6 +54,6 @@
     <color name="lightAccent">#efebe9</color>
 
     <color name="whitePrimary">#FFF</color>
-
+    <color name="green">#49A04D</color>
 
 </resources>

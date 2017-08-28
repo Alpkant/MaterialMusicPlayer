@@ -90,5 +90,6 @@
     <string name="select_a_preset">Select a Preset :</string>
     <string name="select_from_multiple_color_amp_movie_themes"><![CDATA[Select from multiple Color & Movie Themes]]></string>
     <string name="play_song_directly_from_search_results">Play Song directly from search results</string>
+    <string name="switch_betweem_the_light_and_dark_app_themes">Switch between different theme colors</string>
 
 </resources>
